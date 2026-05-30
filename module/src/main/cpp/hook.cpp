@@ -30,6 +30,12 @@ static int my_vasprintf(char **strp, const char *fmt, va_list ap) {
     auto result = old_vasprintf(strp, fmt, ap);
 
     if (result > 0 && *strp) {
+        if (strstr(*strp, "untrusted_app") &&
+            strstr(*strp, "/data/adb") &&
+            strstr(*strp, "avc:  denied")) {
+            (*strp)[0] = '\0';
+            return 0;
+        }
         // https://cs.android.com/android/platform/superproject/main/+/main:external/selinux/libselinux/src/android/android_seapp.c;l=694
         constexpr std::string_view target_context = "tcontext=u:r:priv_app:s0:c512,c768";
         constexpr std::string_view source_contexts[] = {
