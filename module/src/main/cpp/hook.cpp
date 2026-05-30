@@ -34,6 +34,7 @@ static int my_vasprintf(char **strp, const char *fmt, va_list ap) {
         constexpr std::string_view target_context = "tcontext=u:r:priv_app:s0:c512,c768";
         constexpr std::string_view source_contexts[] = {
                 "tcontext=u:r:su:s0",
+                "tcontext=u:r:ksu:s0",
                 "tcontext=u:r:magisk:s0"
         };
 
